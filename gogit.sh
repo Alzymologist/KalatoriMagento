@@ -12,7 +12,7 @@
 
 git status
 git add .
-git commit -m "Saturday work with Max 3"
+git commit -m "add info.txt with useful commands"
 git push
 
 
