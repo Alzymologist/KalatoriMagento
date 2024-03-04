@@ -12,7 +12,7 @@
 
 git status
 git add .
-git commit -m "Stage 2"
+git commit -m "add: polkadot.*.js + logo"
 git push
 
 
