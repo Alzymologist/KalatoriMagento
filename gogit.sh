@@ -12,7 +12,7 @@
 
 git status
 git add .
-git commit -m "add: polkadot.*.js + logo"
+git commit -m "add: flush.sh for flushing all caches, temp folders & other shits"
 git push
 
 
