@@ -4,7 +4,7 @@
  * Alzymologist payment method model
  *
  * @category    Alzymologist
- * @package     Alzymologist_Kalatori
+ * @package     Alzymologist_KalatoriMax
  * @author      Alzymologist
  * @copyright   Alzymologist (https://alzymologist.com)
  * @license     https://github.com/alzymologist/kalatori/blob/master/LICENSE The MIT License (MIT)
@@ -13,9 +13,9 @@
 
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-<head>
-<script src="Alzymologist_KalatoriMax::js/start.js" />
-</head>
+    <head>
+        <script src="Alzymologist_KalatoriMax::js/start.js"/>
+    </head>
     <body>
         <referenceBlock name="checkout.root">
             <arguments>

@@ -1,8 +1,10 @@
-require([],function(){
+require([], function () {
 
-    function aaa(){ return '123'; }
+    function aaa() {
+        return '123';
+    }
 
-    setTimeout(function(){
-	    alert("EEEEEEEEEEMy Custom Js Code: "+aaa());
-    },5000);
+    setTimeout(function () {
+        console.log("EEEEEEEEEEMy Custom Js Code: " + aaa());
+    }, 5000);
 });
