@@ -12,7 +12,7 @@
 
 git status
 git add .
-git commit -m "Test start.js: setTimeout() starting once and than does not work on the checkout page :("
+git commit -m "Stage 2"
 git push
 
 
