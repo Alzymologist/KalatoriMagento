@@ -12,7 +12,7 @@
 
 git status
 git add .
-git commit -m "add: fDOT.magento_init()"
+git commit -m "add: DOT.magento_init()"
 git push
 
 
