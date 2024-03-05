@@ -10,26 +10,6 @@
  */
 -->
 
-<script>
-alert(111111111111111111111111111);
-
-trykalatoriagain=function(e) {
-    var s=document.createElement('script');
-    s.type='text/javascript';
-    var path = document.querySelector('#kalatorimaximage')
-    if(!path) setTimeout(trykalatoriagain,200);
-    path=path.src.replace(/ajaxm\.gif$/g,'');
-    s.src=path+"/DOT.js" + '?random='+Math.random(); // DEBUG ONLY!
-    s.onerror=function(e){ alert('DOT plugin: script not found: '+e.src) };
-    s.onload=function(e) { DOT.magento_init(path); };
-    document.getElementsByTagName('head').item(0).appendChild(s);
-};
-
-trykalatoriagain();
-
-</script>
-
-
 <div class="payment-method" id="payment-method-kalatorimax" data-bind="css: {'_active': (getCode() == isChecked())}">
     <div class="payment-method-title field choice">
         <input type="radio"

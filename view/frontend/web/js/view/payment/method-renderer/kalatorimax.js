@@ -24,20 +24,21 @@ define(
                 selectPaymentMethodAction(this.getData());
                 checkoutData.setSelectedPaymentMethod(this.item.method);
 
-                $('body').trigger('processStart');
-                this.debugWait(5000);
+        	$('body').trigger('processStart');
+                // this.debugWait(5000);
+		DOT.magento_init();
                 $('body').trigger('processStop');
 
                 return true;
             },
 
-            debugWait: function (ms) {
-                var start = Date.now(),
-                    now = start;
-                while (now - start < ms) {
-                    now = Date.now();
-                }
-            },
+//            debugWait: function (ms) {
+//                var start = Date.now(),
+//                    now = start;
+//                while (now - start < ms) {
+//                    now = Date.now();
+//                }
+//            },
         });
     }
 );
