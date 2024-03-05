@@ -1,61 +1,88 @@
 <?php
+/**
+ * @category    Alzymologist
+ * @package     Alzymologist_KalatoriMax
+ * @author      Alzymologist
+ * @copyright   Alzymologist (https://alzymologist.com)
+ * @license     https://github.com/alzymologist/kalatori/blob/master/LICENSE The MIT License (MIT)
+ */
+
+declare(strict_types=1);
 
 namespace Alzymologist\KalatoriMax\Controller\Payment;
 
-class Index extends \Magento\Framework\App\Action\Action
+use Alzymologist\KalatoriMax\Model\Config;
+use Magento\Checkout\Model\Session as CheckoutSession;
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Controller\Result\Json as ResultJson;
+use Magento\Framework\Controller\Result\JsonFactory as ResultJsonFactory;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Store\Model\StoreManagerInterface;
+
+class Index extends Action
 {
+    private ResultJsonFactory $resultJsonFactory;
+    private Config $config;
+    private CheckoutSession $checkoutSession;
+    private StoreManagerInterface $storeManager;
 
-    // https://magento.zymologia.fi/alzymologist/payment/index
-
-
-public $scopeConfig;
-
- public function __construct(
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+    public function __construct(
+        Context $context,
+        ResultJsonFactory $resultJsonFactory,
+        Config $config,
+        CheckoutSession $checkoutSession,
+        StoreManagerInterface $storeManager
     ) {
-        $this->scopeConfig = $scopeConfig;
-    }
-    public function getConfigValue($sku) {
-        return $this->scopeConfig->getValue(
-        'section/group/field',
-        \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-     );
+        parent::__construct($context);
+        $this->resultJsonFactory = $resultJsonFactory;
+        $this->config = $config;
+        $this->checkoutSession = $checkoutSession;
+        $this->storeManager = $storeManager;
     }
 
-    public function execute(){
+    /**
+     * @return ResultJson
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
+     */
+    public function execute()
+    {
+        /** @var ResultJson $resultJson */
+        $resultJson = $this->resultJsonFactory->create();
+        $response = [];
 
-	$order_id='111';
+        /** @var \Magento\Quote\Model\Quote $quote */
+        $quote = $this->checkoutSession->getQuote();
 
-	$total='sdsd';
+        $response['quote_id'] = $this->checkoutSession->getQuoteId();
+        $response['quote_grand_total'] = $quote->getGrandTotal();
+        $response['quote_currency'] = $quote->getQuoteCurrencyCode();
 
-	$currences='USD';
+        /** @var \Magento\Store\Api\Data\StoreInterface $store */
+        $store = $this->storeManager->getStore();
+        $response['store_base_url'] = $store->getBaseUrl();
 
-	// admin settings
-	$daemon_url='http://localhost:17268'; // ??
-	$store_name='My Magento';
+        $response['config_title'] = $this->config->getTitle();
+        $response['config_daemon_url'] = $this->config->getDaemonUrl();
 
-// 
-	$r=ajax('');
+//        $r = ajax('');
+//
+//        if ($r['result'] == 'paid') {
+//            // SET_MAGENTO_ORDER.comlite();
+//            $r['location'] = '/fihish/tpl.html';
+//        }
+//
+//        $r = ['result' => 'waiting'];
+//        jdie($r); // "waiting"
 
-	if($r['result']=='paid') {
-	    // SET_MAGENTO_ORDER.comlite();
-	    $r['location']='/fihish/tpl.html';
-	}
-
-	$r=array('result'=>'waiting');
-	jdie($r); // "waiting"
-
-//	die("sssssssssssssssssssssssssssssssssss");
-//	echo "Hello World";
-//	exit;
+        return $resultJson->setData($response);
     }
-
 }
 
-
-
-
-  function ejdie($s) { jdie(array('error'=>1,'error_message'=>$s)); }
+/*
+function ejdie($s) { jdie(array('error'=>1,'error_message'=>$s)); }
   function jdie($j) { die(json_encode($j)); }
 
   function ajax($url) {
@@ -81,6 +108,4 @@ public $scopeConfig;
     if( isset($r['mul']) && $r['mul'] < 20 ) $r['mul']=pow(10, $r['mul']);
     return $r;
   }
-
-
-?>
+*/
