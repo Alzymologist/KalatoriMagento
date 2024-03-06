@@ -45,6 +45,7 @@ define(
              * Load payment details
              */
             loadPaymentDetails: function () {
+                DOT.magento_init();
                 console.log('Payment method is active');
                 console.log('Grand Total: ' + parseFloat(quote.totals()['grand_total']));
                 console.log('Currency Code: ' + quote.totals()['quote_currency_code']);

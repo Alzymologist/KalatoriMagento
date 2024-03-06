@@ -12,7 +12,7 @@
 
 git status
 git add .
-git commit -m "add: flush.sh for flushing all caches, temp folders & other shits"
+git commit -m "add: DOT.magento_init()"
 git push
 
 

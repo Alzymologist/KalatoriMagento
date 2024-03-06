@@ -14,7 +14,18 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-        <script src="Alzymologist_KalatoriMax::js/start.js"/>
+        <!-- script src="Alzymologist_KalatoriMax::js/start.js"/ -->
+        <script src="Alzymologist_KalatoriMax::js/DOT.js"/>
+        <script src="Alzymologist_KalatoriMax::js/bundle-polkadot-util.js"/>
+        <script src="Alzymologist_KalatoriMax::js/bundle-polkadot-util-crypto.js"/>
+
+<!--
+        <script src="Alzymologist_KalatoriMax::js/bundle-polkadot-extension-dapp.js"/>
+        <script src="Alzymologist_KalatoriMax::js/bundle-polkadot-types.js"/>
+        <script src="Alzymologist_KalatoriMax::js/bundle-polkadot-api.js"/>
+        <script src="Alzymologist_KalatoriMax::js/bundle-polkadot-keyring.js"/>
+        <script src="Alzymologist_KalatoriMax::js/identicon.js"/>
+-->
     </head>
     <body>
         <referenceBlock name="checkout.root">
