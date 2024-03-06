@@ -16,10 +16,9 @@
     <head>
         <!-- script src="Alzymologist_KalatoriMax::js/start.js"/ -->
         <script src="Alzymologist_KalatoriMax::js/DOT.js"/>
+<!--
         <script src="Alzymologist_KalatoriMax::js/bundle-polkadot-util.js"/>
         <script src="Alzymologist_KalatoriMax::js/bundle-polkadot-util-crypto.js"/>
-
-<!--
         <script src="Alzymologist_KalatoriMax::js/bundle-polkadot-extension-dapp.js"/>
         <script src="Alzymologist_KalatoriMax::js/bundle-polkadot-types.js"/>
         <script src="Alzymologist_KalatoriMax::js/bundle-polkadot-api.js"/>

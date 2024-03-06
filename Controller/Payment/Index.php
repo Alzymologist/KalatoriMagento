@@ -54,38 +54,38 @@ class Index extends Action
         $response = [];
 
         /** @var \Magento\Quote\Model\Quote $quote */
-        $quote = $this->checkoutSession->getQuote();
-
-        $response['quote_id'] = $this->checkoutSession->getQuoteId();
-        $response['quote_grand_total'] = $quote->getGrandTotal();
-        $response['quote_currency'] = $quote->getQuoteCurrencyCode();
-
+        $quote = $this->checkoutSession->getQuote();		// "42"
+        $order_id = $this->checkoutSession->getQuoteId();
+        $total = $quote->getGrandTotal();			// "905.0000"
+        $currency = $quote->getQuoteCurrencyCode();		// "USD"
         /** @var \Magento\Store\Api\Data\StoreInterface $store */
-        $store = $this->storeManager->getStore();
-        $response['store_base_url'] = $store->getBaseUrl();
+        // $store = $this->storeManager->getStore(); $store_base_url = $store->getBaseUrl(); // "https:\/\/magento.zymologia.fi\/"
+        // $config_title = $this->config->getTitle(); // "Dotpayment via Alzymologist"
+        $daemon_url = $this->config->getDaemonUrl();
+        if(empty($daemon_url)) $daemon_url = 'http://localhost:16726';
 
-        $response['config_title'] = $this->config->getTitle();
-        $response['config_daemon_url'] = $this->config->getDaemonUrl();
+	if(! empty($_REQUEST['health']) ) {
+	    // Health request
+	    $url = $daemon_url."/order/0/price/0";
+	} else {
+	    // Payment request
+	    $url = $daemon_url."/order/"."Magento_".$order_id."/price/".$total;
+	}
+        $r = $this->ajax($url);
 
-//        $r = ajax('');
-//
-//        if ($r['result'] == 'paid') {
-//            // SET_MAGENTO_ORDER.comlite();
-//            $r['location'] = '/fihish/tpl.html';
-//        }
-//
-//        $r = ['result' => 'waiting'];
-//        jdie($r); // "waiting"
+	if(strtolower($r['result'])=='paid') {
+	    // [ !!! ] Тут должны быть процедуры, закрывающие ордер как оплаченный
+	    // $r['location'] = '/fihish/tpl.html'; // Тут можно указать редирект на страницу звершенного платежа
+	}
 
-        return $resultJson->setData($response);
+	// Add our datas
+	$r['store_total'] = $total;
+	$r['store_order_id'] = $order_id;
+	$r['store_currency'] = $currency;
+	return $resultJson->setData($r);
     }
-}
 
-/*
-function ejdie($s) { jdie(array('error'=>1,'error_message'=>$s)); }
-  function jdie($j) { die(json_encode($j)); }
-
-  function ajax($url) {
+    public function ajax($url) {
     $ch = curl_init($url);
     curl_setopt_array($ch, array(
         CURLOPT_HTTPHEADER => array('Content-Type:application/json'),
@@ -108,4 +108,6 @@ function ejdie($s) { jdie(array('error'=>1,'error_message'=>$s)); }
     if( isset($r['mul']) && $r['mul'] < 20 ) $r['mul']=pow(10, $r['mul']);
     return $r;
   }
-*/
+
+
+}
