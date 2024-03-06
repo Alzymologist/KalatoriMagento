@@ -74,6 +74,7 @@ class Index extends Action
         $r = $this->ajax($url);
 
 	if(strtolower($r['result'])=='paid') {
+	    $r['REALLY_PAID']='OK';
 	    // [ !!! ] Тут должны быть процедуры, закрывающие ордер как оплаченный
 	    // $r['location'] = '/fihish/tpl.html'; // Тут можно указать редирект на страницу звершенного платежа
 	}

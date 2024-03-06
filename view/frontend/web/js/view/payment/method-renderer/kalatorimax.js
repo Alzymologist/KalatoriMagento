@@ -45,10 +45,13 @@ define(
              * Load payment details
              */
             loadPaymentDetails: function () {
-                DOT.magento_init();
-                console.log('Payment method is active');
-                console.log('Grand Total: ' + parseFloat(quote.totals()['grand_total']));
-                console.log('Currency Code: ' + quote.totals()['quote_currency_code']);
+                console.debug('Payment method is active');
+                DOT.magento_init({
+		    redirectOnSuccessAction: redirectOnSuccessAction,
+		    magento_this: this,
+		    total: parseFloat(quote.totals().grand_total),
+		    currency: quote.totals().quote_currency_code,
+		});
             },
 
             /**
@@ -65,41 +68,10 @@ define(
                     additionalValidators.validate() &&
                     this.isPlaceOrderActionAllowed() === true
                 ) {
-                    this.isPlaceOrderActionAllowed(false);
-
-                    if (this.beforePlaceOrder() === false) {
-                        this.isPlaceOrderActionAllowed(true);
-                        return false;
-                    }
-
-                    this.getPlaceOrderDeferredObject()
-                        .done(
-                            function () {
-                                self.afterPlaceOrder();
-
-                                if (self.redirectAfterPlaceOrder) {
-                                    redirectOnSuccessAction.execute();
-                                }
-                            }
-                        ).always(
-                        function () {
-                            self.isPlaceOrderActionAllowed(true);
-                        }
-                    );
-
-                    return true;
+		    DOT.all_submit();
                 }
 
                 return false;
-            },
-
-            /**
-             * @returns {boolean}
-             */
-            beforePlaceOrder: function () {
-                let paymentReceived = false;
-                console.log('beforePlaceOrder = ' + paymentReceived);
-                return paymentReceived;
             },
 
             /**
